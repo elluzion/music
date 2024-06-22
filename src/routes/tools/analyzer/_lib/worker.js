@@ -21,7 +21,7 @@ addEventListener('message', (msg) => {
   postTypedMessage({
     status: {
       progress: 0,
-      checkpoint: 'Calculating key data',
+      checkpoint: 'KEYDATA',
     },
   });
 
@@ -55,7 +55,7 @@ addEventListener('message', (msg) => {
   postTypedMessage({
     status: {
       progress: 0.33,
-      checkpoint: 'Calculating tempo',
+      checkpoint: 'TEMPO',
     },
   });
 
@@ -75,7 +75,7 @@ addEventListener('message', (msg) => {
   postTypedMessage({
     status: {
       progress: 0.67,
-      checkpoint: 'Calculating loudness data',
+      checkpoint: 'LOUDNESS',
     },
   });
 
@@ -100,7 +100,7 @@ addEventListener('message', (msg) => {
   postTypedMessage({
     status: {
       progress: 1,
-      checkpoint: 'Finished!',
+      checkpoint: 'FINISHED',
     },
   });
 });

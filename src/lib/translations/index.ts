@@ -1,13 +1,42 @@
-import English from './en';
+import Translation from './base';
+import DE from './de';
+import EN from './en';
 
 export default class Translations {
-  static readonly EN: Translation = new English();
+  /**
+   * Languages
+   */
+  static LANGUAGES = {
+    en: new EN(),
+    de: new DE(),
+  };
 
-  static get DEFAULT() {
-    return this.EN;
+  /**
+   * @return The default translation
+   */
+  static get CURRENT(): Translation {
+    return this.DEFAULT;
   }
+
+  /**
+   * @return The default translation.
+   */
+  static get DEFAULT(): Translation {
+    return this.LANGUAGES['de'];
+  }
+
+  static INFO = this.CURRENT.INFO;
+
+  // Accessing the default translation
+  static COMMON = this.CURRENT.COMMON;
+  static DATE = this.CURRENT.DATE;
+
+  static HOME = this.CURRENT.HOME;
+  static LOGIN = this.CURRENT.LOGIN;
+  static SONGFORM = this.CURRENT.SONGFORM;
+  static TOOLS = this.CURRENT.TOOLS;
+  static ANALYZER = this.CURRENT.ANALYZER;
 }
 
-export interface Translation {
-  readonly HELLO: string;
-}
+export const Languages = ['en', 'de'] as const;
+export type Language = (typeof Languages)[number];

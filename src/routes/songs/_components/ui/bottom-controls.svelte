@@ -1,5 +1,6 @@
 <script lang="ts">
   import Button from '$lib/components/ui/button/button.svelte';
+  import t from '$lib/translations';
   import { getFormStore } from '../../stores';
 
   const store = getFormStore();
@@ -20,7 +21,7 @@
 
 <div class="flex *:grow gap-2">
   {#if $store.page.current > 1}
-    <Button variant={'secondary'} on:click={handleBackClicked}>Back</Button>
+    <Button variant={'secondary'} on:click={handleBackClicked}>{t.COMMON.BACK}</Button>
   {/if}
-  <Button on:click={handleNextClicked}>Next</Button>
+  <Button on:click={handleNextClicked}>{t.COMMON.NEXT}</Button>
 </div>

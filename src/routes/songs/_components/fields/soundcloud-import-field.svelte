@@ -3,10 +3,12 @@
   import ExpandableCard from '$lib/components/expandable-card.svelte';
   import { Button } from '$lib/components/ui/button';
   import { Input } from '$lib/components/ui/input';
+  import Translations from '$lib/translations';
   import Requester from '$lib/utilities/requester';
   import toast from 'svelte-french-toast';
   import { getFormStore } from '../../stores';
 
+  const t = Translations.SONGFORM.FIELD_SOUNDCLOUD_IMPORT;
   const formStore = getFormStore();
 
   $: formData = $formStore.form.form;
@@ -17,13 +19,13 @@
   function onImportClicked() {
     if (url.startsWith('https://') && url.includes('soundcloud.com')) {
       toast.promise(importSoundcloud(url), {
-        loading: 'Importing...',
+        loading: t.TOAST_IMPORTING,
         success: (title: string) => {
           expanded = false;
           setTimeout(() => {
             $formStore.showSoundcloudImport = false;
           }, 200);
-          return `${title} imported!`;
+          return t.TOAST_IMPORTED.replace('{{title}}', title);
         },
         error: (err) => {
           url = '';
@@ -66,7 +68,7 @@
 </script>
 
 {#if $formStore.showSoundcloudImport}
-  <ExpandableCard {expanded} class="mb-4" title="Import from Soundcloud">
+  <ExpandableCard {expanded} class="mb-4" title={t.TITLE}>
     <Input
       bind:value={url}
       placeholder="https://soundcloud.com/username/track"
@@ -74,7 +76,7 @@
       on:keydown={(e) => e.key === 'Enter' && onImportClicked()}
     />
     <Button disabled={buttonEnabled ? false : true} on:click={() => onImportClicked()}
-      >Import</Button
+      >{t.BUTTON_IMPORT}</Button
     >
   </ExpandableCard>
 {/if}

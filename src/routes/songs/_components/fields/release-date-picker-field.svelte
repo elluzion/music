@@ -2,6 +2,7 @@
   import { Button } from '$lib/components/ui/button/index.js';
   import { Calendar } from '$lib/components/ui/calendar/index.js';
   import * as Popover from '$lib/components/ui/popover/index.js';
+  import Translations from '$lib/translations';
   import { cn } from '$lib/utilities/shadcn';
   import {
     DateFormatter,
@@ -13,6 +14,7 @@
   import { onMount } from 'svelte';
   import { getFormStore } from '../../stores';
 
+  const t = Translations.SONGFORM.FIELD_RELEASE_DATE_PICKER;
   const formStore = getFormStore();
   const df = new DateFormatter('en-US', {
     dateStyle: 'long',
@@ -44,7 +46,7 @@
       builders={[builder]}
     >
       <CalendarIcon class="w-4 h-4 mr-2" />
-      {value ? df.format(value.toDate(getLocalTimeZone())) : 'Pick a date'}
+      {value ? df.format(value.toDate(getLocalTimeZone())) : t.PICK_DATE}
     </Button>
   </Popover.Trigger>
   <Popover.Content class="w-auto p-0">

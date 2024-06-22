@@ -1,9 +1,11 @@
 export type WorkerUpdate = {
   data?: WorkerData;
-  status?: {
-    progress: number;
-    checkpoint: string;
-  };
+  status?: WorkerStatus;
+};
+
+export type WorkerStatus = {
+  progress: number;
+  checkpoint: 'IDLE' | 'KEYDATA' | 'TEMPO' | 'LOUDNESS' | 'FINISHED';
 };
 
 export type WorkerData = {

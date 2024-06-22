@@ -7,7 +7,6 @@
 
   const formStore = getFormStore();
 
-  $: form = $formStore.form;
   $: formData = $formStore.form.form;
 
   export let download: Song['downloadLinks'][0];

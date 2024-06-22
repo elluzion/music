@@ -4,10 +4,13 @@
   import * as Form from '$lib/components/ui/form';
   import Input from '$lib/components/ui/input/input.svelte';
   import * as Select from '$lib/components/ui/select';
+  import Translations from '$lib/translations';
   import type { Song } from '$lib/types/song';
   import type { Selected } from 'bits-ui';
   import { getFormStore } from '../../stores';
   import DownloadLinkEntry from '../ui/download-link-entry.svelte';
+
+  const t = Translations.SONGFORM.TAB_DOWNLOADLINKS;
 
   const formStore = getFormStore();
 
@@ -38,16 +41,16 @@
     <div class="flex gap-2">
       <Select.Root onSelectedChange={(v) => onFormatSelectChange(v)}>
         <Select.Trigger class="h-12 w-[100px] shrink-0">
-          <Select.Value placeholder="Format" />
+          <Select.Value placeholder={t.INPUT_FORMAT_PLACEHOLDER} />
         </Select.Trigger>
         <Select.Content>
-          <Select.Item value="mp3">MP3</Select.Item>
-          <Select.Item value="wav">WAV</Select.Item>
+          <Select.Item value="mp3">{t.SELECT_MP3}</Select.Item>
+          <Select.Item value="wav">{t.SELECT_WAV}</Select.Item>
         </Select.Content>
       </Select.Root>
-      <Input bind:value={edit} placeholder="Edit (eg. Extended Mix)" />
+      <Input bind:value={edit} placeholder={t.INPUT_EDIT_PLACEHOLDER} />
     </div>
-    <Button on:click={addDownloadLink}>Add</Button>
+    <Button on:click={addDownloadLink}>{t.BUTTON_ADD}</Button>
   </div>
   {#if $formData.downloadLinks.length > 0}
     <SpacerHandle />

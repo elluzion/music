@@ -1,24 +1,19 @@
+import t from '$lib/translations';
+
 export default class Formatter {
   //#region Dates
   static formatDate(date: Date, shorten: boolean): string {
     const day = date.getDate();
-    const ordinalSuffix: string = Formatter.getOrdinalSuffix(day);
-    const monthNames: string[] = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    let monthName = monthNames[date.getMonth()];
+    const monthNames = t.DATE.MONTHS;
+    let monthName = Object.values(monthNames)[date.getMonth()];
     let year = date.getFullYear().toString();
+    let ordinalSuffix;
+    // In german, we don't need the suffix and use a dot instead.
+    if (t.INFO.LANG_ID == 'de') {
+      ordinalSuffix = '.';
+    } else {
+      ordinalSuffix = Formatter.getOrdinalSuffix(day);
+    }
 
     if (shorten) {
       if (monthName.length > 5) {
@@ -36,7 +31,7 @@ export default class Formatter {
     if (!nice) {
       return list.join(', ');
     } else if (list.length === 2) {
-      return list.join(' and ');
+      return list.join(` ${t.COMMON.AND} `);
     } else if (list.length > 2) {
       return list.slice(0, -1).join(', ') + ' & ' + list[list.length - 1];
     } else {

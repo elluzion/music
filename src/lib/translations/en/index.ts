@@ -1,5 +1,3 @@
-import type { Translation } from '..';
+import Translation from '../base';
 
-export default class English implements Translation {
-  HELLO = 'Hello!';
-}
+export default class EN extends Translation {}

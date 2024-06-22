@@ -1,6 +1,9 @@
 <script lang="ts">
   import Card from '$lib/components/card.svelte';
   import { setPageHeaderTitle } from '$lib/components/page-header';
+  import Translations from '$lib/translations';
+
+  const t = Translations.TOOLS;
 
   type Tool = {
     name: string;
@@ -9,22 +12,22 @@
   };
   const tools: Tool[] = [
     {
-      name: 'Audio analyzer',
-      description: 'Receive information about an audio file, such as BPM or key.',
+      name: Translations.ANALYZER.TITLE,
+      description: Translations.ANALYZER.DESCRIPTION,
       path: 'analyzer',
     },
   ];
 
   // Set page title
-  setPageHeaderTitle('Tools');
+  setPageHeaderTitle(t.TITLE);
 </script>
 
 <svelte:head>
-  <title>Tools | Elluzion</title>
+  <title>{t.TITLE} | Elluzion</title>
 </svelte:head>
 
 <div class="flex flex-col gap-2 content-wrapper">
-  <h1>Tools</h1>
+  <h1>{t.TITLE}</h1>
   <div>
     {#each tools as tool}
       <a href="/tools/{tool.path}">

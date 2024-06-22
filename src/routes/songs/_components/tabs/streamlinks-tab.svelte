@@ -8,12 +8,14 @@
   import { Input } from '$lib/components/ui/input';
   import * as ToggleGroup from '$lib/components/ui/toggle-group';
   import { MusicPlatforms, Platforms, resolvePlatform } from '$lib/shared/platforms';
+  import Translations from '$lib/translations';
   import Formatter from '$lib/utilities/formatter';
   import Requester from '$lib/utilities/requester';
   import toast from 'svelte-french-toast';
   import { getFormStore } from '../../stores';
   import StreamLinkEntry from '../ui/stream-link-entry.svelte';
 
+  const t = Translations.SONGFORM.TAB_STREAMLINKS;
   const formStore = getFormStore();
 
   $: form = $formStore.form;
@@ -36,11 +38,11 @@
   function onFetchLinksClicked() {
     fetchLinksButtonEnabled = false;
     toast.promise(fetchLinks(), {
-      loading: 'Fetching links...',
+      loading: t.INFO_FETCHING_LINKS,
       success: (data) => {
         resetToggleGroup();
         const platforms = data.links.map((x) => resolvePlatform(x)).map((x) => x.name);
-        return 'Found links for ' + Formatter.joinList(platforms, true);
+        return t.INFO_LINKS_FOUND.replace('%platforms%', Formatter.joinList(platforms, true));
       },
       error: (msg) => {
         resetToggleGroup();
@@ -52,10 +54,10 @@
   async function fetchLinks() {
     // Missing data
     if ($formData.artists.length === 0) {
-      return Promise.reject('Please provide at least one artist');
+      return Promise.reject(t.ERR_NO_ARTIST);
     }
     if (!$formData.title) {
-      return Promise.reject('Please provide a song title');
+      return Promise.reject(t.ERR_NO_TITLE);
     }
 
     // Get links
@@ -79,7 +81,9 @@
         const platforms = data.failed.map(
           (platformId) => Platforms.find((plat) => plat.id == platformId)?.name || platformId,
         );
-        return Promise.reject('No links found on ' + Formatter.joinList(platforms, true));
+        return Promise.reject(
+          t.ERR_NO_LINKS_FOUND.replace('%platforms%', Formatter.joinList(platforms, true)),
+        );
       }
 
       const newLinks = data.links.filter((x) => !$formData.streamLinks.includes(x));
@@ -110,7 +114,7 @@
     {/each}
   </ToggleGroup.Root>
   <Button disabled={!fetchLinksButtonEnabled} on:click={onFetchLinksClicked}
-    >Fetch links for selected</Button
+    >{t.BUTTON_FETCHLINKS}</Button
   >
   <ExpandableCard expanded={false} title="Add link">
     <Input
@@ -120,7 +124,7 @@
       placeholder="URL"
       type="url"
     />
-    <Button on:click={addLinkClicked}>Add</Button>
+    <Button on:click={addLinkClicked}>{t.BUTTON_ADD}</Button>
   </ExpandableCard>
   {#if $formData.streamLinks.length > 0}
     <SpacerHandle />

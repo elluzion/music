@@ -1,14 +1,31 @@
 <script lang="ts">
   import MaterialSymbol from '$lib/components/material-symbol.svelte';
+  import Translations from '$lib/translations';
   import { createEventDispatcher } from 'svelte';
+  import type { WorkerStatus } from '../_lib/types';
 
+  const t = Translations.ANALYZER.FILE_UPLOAD_INPUT;
+  const workerT = Translations.ANALYZER.WORKER;
   const dispatch = createEventDispatcher<{ submit: File }>();
 
   export let isLoading: boolean;
-  export let loadingStatusMessage: string;
+  export let loadingStatus: WorkerStatus['checkpoint'];
   export let loadingProgress: number;
 
+  let loadingStatusMessage: string | undefined;
   let uploadOverlay: HTMLLabelElement;
+
+  $: if (loadingStatus == 'IDLE') {
+    loadingStatusMessage = undefined;
+  } else if (loadingStatus == 'KEYDATA') {
+    loadingStatusMessage = workerT.STATUS_KEYDATA;
+  } else if (loadingStatus == 'TEMPO') {
+    loadingStatusMessage = workerT.STATUS_TEMPO;
+  } else if (loadingStatus == 'LOUDNESS') {
+    loadingStatusMessage = workerT.STATUS_LOUDNESS;
+  } else if (loadingStatus == 'FINISHED') {
+    loadingStatusMessage = workerT.STATUS_FINISHED;
+  }
 
   const hoverOverlayClasses = ['!ring-2', '!ring-ring', '!ring-offset-2', '!bg-opacity-100'];
 
@@ -56,11 +73,11 @@
     <div class="flex items-center justify-center gap-2 font-semibold">
       <MaterialSymbol>{isLoading ? 'refresh' : 'upload'}</MaterialSymbol>
       <span>
-        {isLoading ? loadingStatusMessage || 'Analyzing' : 'Upload file'}
+        {isLoading ? loadingStatusMessage || t.WORKING : t.UPLOAD}
       </span>
     </div>
     <span class="w-full font-mono text-sm truncate text-muted-text">
-      {isLoading ? 'This will take a few seconds' : ALLOWED_FILE_TYPES.join(', ')}
+      {isLoading ? t.WORKING_SUBTITLE : ALLOWED_FILE_TYPES.join(', ')}
     </span>
   </label>
   <input

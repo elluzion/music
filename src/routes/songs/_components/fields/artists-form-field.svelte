@@ -4,10 +4,13 @@
   import Button from '$lib/components/ui/button/button.svelte';
   import * as Form from '$lib/components/ui/form';
   import { Input } from '$lib/components/ui/input';
+  import Translations from '$lib/translations';
   import { slide } from 'svelte/transition';
   import { getFormStore } from '../../stores';
 
   const formStore = getFormStore();
+
+  const title = Translations.SONGFORM.FIELD_ARTISTS;
 
   $: form = $formStore.form;
   $: formData = $formStore.form.form;
@@ -30,7 +33,7 @@
 <Form.Field {form} name="artists">
   <Form.Control let:attrs>
     <div class="flex justify-between pt-2">
-      <Form.Label>Artists</Form.Label>
+      <Form.Label>{title}</Form.Label>
       <span class="font-mono text-sm text-muted-text">{$formData.artists.length}</span>
     </div>
     <div class="hidden flex-wrap gap-2 has-[a]:flex">

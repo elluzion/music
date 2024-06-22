@@ -1,9 +1,13 @@
 <script>
   import * as Form from '$lib/components/ui/form';
   import { Input } from '$lib/components/ui/input';
+  import Translations from '$lib/translations';
   import { getFormStore } from '../../stores';
 
   const formStore = getFormStore();
+
+  const title = Translations.SONGFORM.FIELD_ART_URL;
+  const placeholder = Translations.SONGFORM.FIELD_ART_URL_PLACEHOLDER;
 
   $: form = $formStore.form;
   $: formData = $formStore.form.form;
@@ -11,12 +15,12 @@
 
 <Form.Field {form} name="artUrl">
   <Form.Control let:attrs>
-    <Form.Label>Album cover</Form.Label>
+    <Form.Label>{title}</Form.Label>
     <div class="flex items-center gap-2">
-      <Input {...attrs} bind:value={$formData.artUrl} placeholder="https://..." />
+      <Input {...attrs} bind:value={$formData.artUrl} {placeholder} />
       <img
         src={$formData.artUrl.trim()}
-        alt="Album cover"
+        alt={title}
         class="w-12 h-12 transition-[transform,box-shadow] border shadow-none rounded-md shrink-0 -z-10"
       />
     </div>

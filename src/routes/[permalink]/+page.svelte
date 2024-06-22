@@ -7,6 +7,7 @@
   import SpacerHandle from '$lib/components/spacer-handle.svelte';
   import Button from '$lib/components/ui/button/button.svelte';
   import { resolvePlatform, type Platform } from '$lib/shared/platforms.js';
+  import Translations from '$lib/translations';
   import { clampNumber } from '$lib/utilities/clamp';
   import Formatter from '$lib/utilities/formatter';
   import { onMount } from 'svelte';
@@ -118,7 +119,8 @@
         <Button
           class="flex gap-2 truncate shadow-xl h-14"
           on:click={() => goto(`/songs/${song.permalink}`)}
-          ><MaterialSymbol class="text-background">edit</MaterialSymbol> Edit</Button
+          ><MaterialSymbol class="text-background">edit</MaterialSymbol>
+          {Translations.COMMON.EDIT}</Button
         >
       {/if}
     </div>
