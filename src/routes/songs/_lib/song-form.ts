@@ -24,7 +24,6 @@ const metadata = z.object({
           'add',
           'api',
           'songs',
-          'tools',
           'login',
         ];
         return !reserved.includes(x.toLowerCase());

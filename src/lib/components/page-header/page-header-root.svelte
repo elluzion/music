@@ -25,9 +25,6 @@
       style="background: url({homeButtonIconUrl}) no-repeat center;"
     ></a>
     <span class="font-mono text-sm font-semibold truncate grow">{$PageHeaderTitle}</span>
-    <a class="{!isHome ? '!hidden ' : ''}button__styled hover:bg-accent" href="/tools">
-      <MaterialSymbol>home_repair_service</MaterialSymbol>
-    </a>
     {#if isLoggedIn}
       <a
         class="{!isHome
